@@ -13,11 +13,12 @@ plugins {
     id("dev.deftu.gradle.tools.publishing.maven")
 }
 
-apply(rootProject.file("secrets.gradle.kts"))
+//apply(rootProject.file("secrets.gradle.kts"))
 
 toolkitMultiversion.moveBuildsToRootProject.set(true)
 toolkitLoomHelper.useMixinRefMap(modData.id)
 repositories.maven("https://maven.teamresourceful.com/repository/maven-public/")
+repositories.mavenLocal() // TODO: remove once knit-1.21.11-fabric is published to remote maven
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -35,6 +36,7 @@ dependencies {
     }
 
     when (mcData.version) {
+        MinecraftVersions.VERSION_1_21_11 -> include(modApi("earth.terrarium.olympus:olympus-fabric-1.21.11:1.7.2")!!)
         MinecraftVersions.VERSION_1_21_10 -> include(modApi("earth.terrarium.olympus:olympus-fabric-1.21.9:1.6.2")!!)
         MinecraftVersions.VERSION_1_21_8 -> include(modApi("earth.terrarium.olympus:olympus-fabric-1.21.7:1.5.2")!!)
         MinecraftVersions.VERSION_1_21_5 -> include(modApi("earth.terrarium.olympus:olympus-fabric-1.21.5:1.3.6")!!)
